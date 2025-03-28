@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - sudo rm -rf /etc/localtime
+      - sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
+      - export TAG="$(date '+%Y-%m-%d.%H.%M.%S')"
+  build:
+    commands:
+      - docker build -t temp .
+  post_build:
+    commands:
+      - docker tag temp:latest $ECR_URL:$TAG
+      - docker push $ECR_URL:$TAG
+      - sed -i "s|<IMAGE_URI>|$ECR_URL:$TAG|" imagedefinitions.json
+artifacts:
+    files:
+      - imagedefinitions.json
