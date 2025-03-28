@@ -6,7 +6,7 @@ phases:
     commands:
       - sudo rm -rf /etc/localtime
       - sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_URL
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
       - export TAG="$(date '+%Y-%m-%d.%H.%M.%S')"
   build:
     commands:
