@@ -27,7 +27,7 @@ RUN chown -R ${APP_UID}:${APP_UID} /app && \
 USER ${APP_UID}:${APP_UID}
 
 
-ENTRYPOINT ["/app/subtrace", "run", "--", "/app/token"]
+ENTRYPOINT ["/app/token"]
 
 # === 사용 가이드 ===
 # 기본 실행: 
